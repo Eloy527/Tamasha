@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" href="/static/css/detaails.css">
+<link rel="stylesheet" href="/static/css/normalize.css">
+<title>DRAMATIC</title>
+<style>
+    .movie-video {
+        padding-left: 100px;
+    }
+</style>
+{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="picture_movie">
+        <img src="https://image.tmdb.org/t/p/w200{{movie.get('poster_path')}}" alt="">
+        <h1>{{ movie.get('title')}}<br>
+            <p>{{movie.get('release_date')}}</p>
+            <p style="color: rgb(255, 234, 0); margin-top: 0px; ">{{movie.get('vote_average')}} </p>
+        </h1>
+        <div class="movie-video">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{video_key}}" frameborder="0"
+                allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+<h2 class="title_similar">Similar</h2>
+<div class="categori_list">
+
+    {% for simmilar in simmilar_movies%}
+
+    <a class="movie" href="{{ url_for('main.show_mivie_detalis',id=simmilar.get('id'))}}">
+        <img src="https://image.tmdb.org/t/p/w200{{simmilar.get('poster_path')}}" alt=""></a>
+    <div class="about_film_text">
+        <h2 style="color: #FFF;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;" class="title_film">{{ simmilar.get('title')}}</h2>
+        <p style="    color: #AFAFAF;
+                font-size: 11px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;">{{simmilar.get('release_date')}}</p>
+        <div class="movie-rate">
+            <div>
+                <img src="/static/img/image 3.png" alt="">
+                <p style="    color: #FFC907;
+                        font-size: 11px;
+                        font-style: normal;
+                        font-weight: 700;
+                        line-height: normal;">{{ simmilar.get('vote_average')}}</p>
+            </div>
+        </div>
+
+    </div>
+    
+    <script src="/static/js/jquary.js"></script>
+    <script src="/static/js/myleked.js"></script>
+    {%endfor%}
+
+</div>
+
+<div class="comment">
+    <h1>Comments</h1>
+    <form action="/movie/{{movie['id']}}" method="POST">
+        {{ form.csrf_token }}
+        <div class="">
+            {{form.content(rows=5,columns=20)}}
+        </div>
+        <button type="submit">Publicate</button>
+    </form>
+
+    {% for comment in comments %}
+
+
+    <!-- comments container -->
+    <div class="comment_block">
+        <div class="new_comment">
+
+            <!-- build comment -->
+            <ul class="user_comment">
+                <div style="display: flex;">
+                    <div class="user_avatar">
+                        <img src="/static/img/Ellipse 1.png">
+                    </div><!-- the comment body -->
+                    <div class="comment_body">
+                        <p>{{ comment.content }}</p>
+                    </div>
+                </div>
+
+
+                <!-- comments toolbar -->
+                <div class="comment_toolbar">
+
+                    <!-- inc. date and time -->
+                    <div class="comment_details">
+                        <ul>
+                            <li><i class="fa fa-clock-o"></i> </li>
+                            <li><i class="fa fa-calendar"></i> 10/01/2024</li>
+                            <li><i class="fa fa-pencil"></i> <span class="user">{{ comment.user_id.username }}</span>
+                            </li>
+                        </ul>
+                    </div><!-- inc. share/reply and love -->
+                    <div class="comment_tools">
+                        <ul>
+                            <li><i class="fa fa-share-alt"></i></li>
+                            <li><i class="fa fa-reply"></i></li>
+                            <li><i class="fa fa-heart love"></i></li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </ul>
+
+        </div>
+
+
+
+    </div>
+
+    {%endfor%}
+
+</div>
+{% endblock %}

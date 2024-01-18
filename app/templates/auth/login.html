@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" href="/static/css/main.css">
+<link rel="stylesheet" href="/static/css/regist.css">
+<link href='https://fonts.googleapis.com/css?family=Permanent Marker' rel='stylesheet'>
+<style>
+    body{color: white;    background-color: rgb(132, 132, 133);
+}
+</style>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <form class="box" action="/login" method="POST">
+        {{ form.csrf_token }}
+        <div id="upper_log">
+            <div class="log_form">
+                    {{ form.username(placeholder="username") }}
+                    {{ form.password(placeholder="password") }}
+                    {% if form.username.errors %}
+                     <ul class="errors">
+                     {% for error in form.username.errors %}
+                      <li>{{ error }}</li>
+                       {% endfor %}
+                        </ul>
+                    {% endif %}
+                    {% if form.password.errors %}
+                      {% for error in form.password.errors %}
+                      <li>{{ error }}</li>
+                       {% endfor %}
+                        </ul>
+                    {% endif %}
+                    
+                    {% if error %}
+                    <h2>{{error}}</h2>
+                    {% endif %}
+
+                <input type="submit" value="Sigin up" id="sub_btn" class="animated bounceInLeft">
+            </div>
+        </div>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/static/css/normalize.css">
+    <script src="/static/js/jquary.js"></script>
+    {% block head %}
+        
+    {% endblock %}
+    <title>DRAMATIC</title>
+</head>
+
+<body>
+
+    <div class="nav">
+        <h2 class="nav-title">DRAMATIC</h2>
+        <ul class="nav-buttons">
+            <li><a href="{{ url_for('main.index' ) }}" class="home">HOME</a></li>
+            <li><a href="TV SHOW">TV SHOW</a></li>
+            <li><a href="MOVIES">MOVIES</a></li>
+            <li><a href="NEW">NEW</a></li>
+        </ul>
+        <div class="nav-profile">
+            <input type="text" placeholder="SEARCH" />
+            <img src="/static/img/gift 1.png" alt="">
+            <img src="/static/img/bell 1.png" alt="">
+            <a href="register"><img src="/static/img/Ellipse 1.png" alt=""></a>
+        </div>
+    </div>
+    {% block content %}
+        
+    {% endblock %}
+</body>
+</html>

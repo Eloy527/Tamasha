@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% block head %}
+    <link rel="stylesheet" href="/static/css/main.css">
+    <style>
+
+
+    </style>
+{% endblock %}
+{% block content %}
+<style>
+    .header{
+        background: url("https://image.tmdb.org/t/p/w200{{main_movie.get('poster_path')}}") no-repeat;
+    }
+    .header-inform {
+        padding-top: 20px;
+        padding-left: 270px;
+    }
+
+
+</style>
+<div class="container">
+        <div class="header">
+            <div class="header-inform">
+                <p class="decribe-film">{{ main_movie.get('overview') }}</p>
+                <p class="genres"><span>GENRES</span><br>Romance, Drama</p>
+                <div class="buttons">
+                    <button class="watch">WATCH <img src="/static/img/Vector.png" alt=""></button>
+                    <button class="list">MY LIST +</button>
+                </div>
+                <div class="header-information">
+                    <img src="/static/img/image 3.png" alt="" class="imbdp1">
+                    <p><span>7.3</span></p>
+                    <p class="wb">U/A</p>
+                    <p class="wb">4K</p>
+                    <p class="year">2015</p>
+
+                </div>
+
+            </div>
+            <h1 class="title_text">{{ main_movie.get('title')}}</h1>
+
+        </div>
+            <div class="upcoming">
+                <div class="upcoming-header">
+                    <h2>Upcoming movies</h2>
+                    <a href="upcoming">SHOW</a>
+                </div>
+                <div class="upcoming-list">
+                    {% for movie in upcoming_movies %}
+                    <div class="movie">
+                        <a class="movie" href="{{ url_for('main.show_mivie_detalis',id=movie.get('id'))}}">
+                        <img src="https://image.tmdb.org/t/p/w200{{movie.get('poster_path')}}" alt=""></a>
+                        </a>
+                        <h2>{{ movie.get('title')}}</h2>
+                        <p>{{movie.get('release_date')}}</p>
+                        <div class="movie-rate">
+                            <div>
+                                <img src="/static/img/image 3.png" alt="">
+                                <p>{{ movie.get('vote_average')}}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                    {%endfor%}
+
+                </div>
+            </div>
+        <div class="upcoming">
+            <div class="upcoming-header">
+                <h2>RECOMMENDED FOR YOU</h2>
+                <a href="/popular">Show</a>
+            </div>
+
+            <div class="upcoming-list">
+                {% for movie in popular_movies %}
+                <div class="movie">
+                    <a class="movie" href="{{ url_for('main.show_mivie_detalis',id=movie.get('id'))}}">
+                    <img src="https://image.tmdb.org/t/p/w200{{movie.get('poster_path')}}" alt=""></a>
+                    </a>
+                    <h2 id="name">{{ movie.get('title')}}</h2>
+                    <p id="dater">{{movie.get('release_date')}}</p>
+                    <div class="movie-rate">
+                        <div>
+                            <img src="/static/img/image 3.png" alt="">
+                            <p id="vote">{{ movie.get('vote_average')}}</p>
+                        </div>
+                    </div>
+                </div>
+                {%endfor%}
+
+            </div>
+        </div>
+        <script>
+            let url = new URL(window.location.href)
+            let page = parseInt(url.searchParams.get('page'))
+    
+            console.log('Page=', page)
+    
+            let buttons=document.querySelector('.page-btns').querySelectorAll('a')
+    
+            if (page){
+                let btn=buttons[page-1]
+                // console.log(btn)
+                if (btn){
+                    btn.classList.add('active')
+                }
+            }else{
+                let btn=buttons[0]
+                // console.log(btn)
+                if (btn){
+                    btn.classList.add('active')
+                }
+            }
+    
+        </script>
+{% endblock %}
