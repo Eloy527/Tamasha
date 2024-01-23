@@ -6,20 +6,16 @@ from datetime import timedelta
 def create_app():
     from auth import auth
     from main import main
+    from config import Config
+    from .extensions import db,login_manager
 
     app = Flask(__name__,static_url_path='/static')
-    app.config["SECRET_KEY"] = '@3FG'
-    app.config["REMEMBER_COOKIE_DURATION"] = timedelta(days=3)
 
-
+    app.config.from_object(Config())
     app.register_blueprint(auth)
     app.register_blueprint(main)
+
+    db.init_app(app)
+    login_manager.init_app(app)
     
-
-
-
-    @login_manager.user_loader
-    def load_user(user_id):
-        from data_base import User
-        return User.query.get(int(user_id))
     return app
